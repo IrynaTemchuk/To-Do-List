@@ -6,27 +6,39 @@ let todos = JSON.parse(localStorage.getItem("todo-list"));
 
 function showTodo() {
     let li = "";
-    todos.forEach((todo, id) => {
-       li += `<li class="task">
-                <label for="${id}">
-                    <input type="checkbox" id="${id}">
-                    <p>${todo.name}</p>
-                </label>
-                <div class="settings">
-                    <i class="uil uil-ellipsis-h"></i>
-                    <ul class="task-menu">
-                        <li><i class="uil uil-pen"></i>Edit</li>
-                        <li><i class="uil uil-trash"></i>Delete</li>
-                    </ul>
-                </div>
-            </li>`;
-    });
+    if(todos) {
+        todos.forEach((todo, id) => {
+            li += `<li class="task">
+                     <label for="${id}">
+                         <input onclick="updateStatus(this)" type="checkbox" id="${id}">
+                         <p>${todo.name}</p>
+                     </label>
+                     <div class="settings">
+                         <i class="uil uil-ellipsis-h"></i>
+                         <ul class="task-menu">
+                             <li><i class="uil uil-pen"></i>Edit</li>
+                             <li><i class="uil uil-trash"></i>Delete</li>
+                         </ul>
+                     </div>
+                 </li>`;
+         });
+    }
     taskBox.innerHTML = li;
 }
 
 showTodo();
 
-taskInput.addEventListener("keyup", e =>{
+function updateStatus(selectedTask) {
+    // getting paragraph that contains task name
+    let taskName = selectedTask.parentElement.lastElementChild;
+    if(selectedTask.checked) {
+        taskName.classList.add("checked");
+    } else {
+        taskName.classList.remove("checked");
+    }
+}
+
+taskInput.addEventListener("keyup", e => {
     let userTask = taskInput.value.trim();
     if(e.key == "Enter" && userTask){
         if(!todos){ // if todos isn't exist, pass an empty array to todos
