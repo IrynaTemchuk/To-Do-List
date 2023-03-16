@@ -69,14 +69,14 @@ function deleteTask(deleteId) {
     // removing selected task from array/todos
     todos.splice(deleteId, 1);
     localStorage.setItem("todo-list", JSON.stringify(todos));
-    showTodo();
+    showTodo("all");
 }
 
 clearAll.addEventListener("click", () => {
     // removing all task of array/todos
     todos.splice(0, todos.length);
     localStorage.setItem("todo-list", JSON.stringify(todos));
-    showTodo();
+    showTodo("all");
 });
 
 
@@ -110,6 +110,6 @@ taskInput.addEventListener("keyup", e => {
         }
         taskInput.value = "";
         localStorage.setItem("todo-list", JSON.stringify(todos));
-        showTodo();
+        showTodo("all");
     }
 });
